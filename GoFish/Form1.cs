@@ -164,7 +164,7 @@ namespace GoFish
             cards.Sort(new CardComparer_byValue());
         }
 
-        public void Sort()
+        public void SortBySuit()
         {
             cards.Sort(new CardComparer_bySuit());
         }
@@ -210,6 +210,14 @@ namespace GoFish
         public string Name
         {
             get { return Value.ToString() + " of " + Suit.ToString(); }
+        }
+
+        public static string Plural(Values value)
+        {
+            if (value == Values.Six)
+                return "Sixes";
+            else
+                return value.ToString() + "s";
         }
     }
 
