@@ -24,9 +24,10 @@ namespace GoFish
 
             this.name = name;
             this.random = random;
-            this.cards = new Deck();
+            this.cards = new Deck(0);
+            this.textBoxOnForm = textBoxOnForm;
 
-            textBoxOnForm.Text += this.name + " has just joined the game" + Environment.NewLine;
+            this.textBoxOnForm.Text += this.name + " has just joined the game" + Environment.NewLine;
         }
 
         public IEnumerable<Values> PullOutBooks() {
@@ -87,23 +88,31 @@ namespace GoFish
             textBoxOnForm.Text += this.name + " asks if anyone has a " + value.ToString() + Environment.NewLine;
             int numberOfCards = 0;
             int flag = 0;
+
+            int counter = 0;
             foreach(Player player in players)
             {
-                Deck temp = player.DoYouHaveAny(value);
-                if (temp.Count > 0)
+                if (counter != myIndex)
                 {
-                    flag = 1;
-                    numberOfCards += temp.Count;
-                    for (int i = 0; i < temp.Count; i++)
+                    Deck temp = player.DoYouHaveAny(value);
+                    if (temp.Count > 0)
                     {
-                        cards.Add(temp.Deal(i));
+                        flag = 1;
+                        numberOfCards += temp.Count;
+                        for (int i = 0; i < temp.Count; i++)
+                        {
+                            cards.Add(temp.Deal(i));
+                        }
                     }
                 }
+                counter++;
             }
 
             if (flag == 0)
             {
                 cards.Add(stock.Deal());
+                numberOfCards += stock.Count;
+                textBoxOnForm.Text += this.name + " had to draw from the stock" + Environment.NewLine;
             }
 
         }

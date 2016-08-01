@@ -85,6 +85,10 @@ namespace GoFish
                 for (int value = 1; value <= 13; value++)
                     cards.Add(new Card((Suits)suit, (Values)value));
         }
+        public Deck(int value)
+        {
+            cards = new List<Card>();
+        }
 
         public Deck(IEnumerable<Card> initialCards)
         {
